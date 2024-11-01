@@ -1,0 +1,112 @@
+// General Styles
+div {
+  max-width: 800px; // Set a maximum width for the component
+  margin: 40px auto; // Center the container with space above and below
+  padding: 30px; // Add padding for inner spacing
+  border-radius: 16px; // Rounded corners for a modern look
+  background: #2c3e50; // Dark background color for a sophisticated feel
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7); // Softer shadow for depth
+  color: #ecf0f1; // Light text color for readability
+  animation: fadeIn 0.5s ease-in; // Fade-in animation
+
+  // Keyframes for fade-in effect
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px); // Slight upward movement during fade-in
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+// Headings Styles
+h3 {
+  color: #ffffff; // Bright white for headings
+  margin-bottom: 15px; // Space below headings
+  font-family: 'Roboto', sans-serif; // Clean font family for headings
+  font-size: 28px; // Increased font size for headings
+  text-align: center; // Center align headings
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6); // Softer shadow for depth
+}
+
+// Input and Button Styles
+input[type="text"] {
+  width: 100%; // Full width input
+  padding: 14px 5px; // Padding for input field
+  border: 2px solid #3498db; // Soft blue border color
+  border-radius: 8px; // Rounded corners
+  margin-bottom: 20px; // Space below the input
+  font-size: 18px; // Larger font size for readability
+  background-color: #34495e; // Darker background for input
+  color: #ecf0f1; // Light text color in input
+  transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s; // Smooth transitions
+
+  &::placeholder {
+    color: #bdc3c7; // Placeholder color
+  }
+
+  &:focus {
+    border-color: #1abc9c; // Change border color on focus
+    outline: none; // Remove default outline
+    box-shadow: 0 0 5px rgba(26, 188, 156, 0.5); // Glow effect on focus
+    transform: scale(1.02); // Slightly scale up on focus for emphasis
+  }
+}
+
+button {
+  background-color: #3498db; // Blue background for buttons
+  color: white; // White text
+  padding: 14px 20px; // Padding for buttons
+  border: none; // Remove default border
+  border-radius: 8px; // Rounded corners
+  cursor: pointer; // Pointer cursor on hover
+  font-size: 18px; // Button text size
+  transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s; // Smooth transition for hover
+
+  &:hover {
+    background-color: #2980b9; // Darker blue on hover
+    transform: translateY(-2px) scale(1.05); // Lift and scale effect on hover
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5); // Shadow effect on hover
+  }
+
+  &:active {
+    transform: translateY(0) scale(1); // Reset effect when clicked
+  }
+}
+
+// QR Code Image Styles
+img {
+  display: block; // Block display to center image
+  margin: 20px auto; // Space around the image, center it
+  max-width: 100%; // Responsive image
+  height: auto; // Maintain aspect ratio
+  border-radius: 12px; // Slightly rounded corners for image
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7); // Stronger shadow for the image
+  transition: transform 0.3s, box-shadow 0.3s; // Smooth transition for hover
+
+  &:hover {
+    transform: scale(1.1); // Scale up image on hover
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.9); // Increased shadow on hover
+  }
+}
+
+// Video Element Styles
+video {
+  display: block; // Block display for video
+  margin: 20px auto; // Center the video
+  border-radius: 8px; // Rounded corners
+  border: 2px solid #3498db; // Attractive blue border around video
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7); // Stronger shadow for the video
+}
+
+// Additional Styling for Scanned Code Text
+p {
+  font-size: 20px; // Size for scanned code text
+  text-align: center; // Center align the scanned code text
+  color: #1abc9c; // Bright teal for scanned code text
+  margin-top: 15px; // Space above the scanned code text
+  animation: fadeIn 0.5s ease-in; // Fade-in effect for scanned code text
+}

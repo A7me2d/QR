@@ -1,0 +1,28 @@
+
+
+
+
+
+<div>
+  <h3>Generate QR Code</h3>
+  <input #inputCode type="text" placeholder="Enter student code">
+  <button (click)="generateQRCode(inputCode.value)">Generate QR Code</button>
+  <div *ngIf="qrCodeUrl">
+    <h4>QR Code:</h4>
+    <img [src]="qrCodeUrl" alt="Student QR Code">
+  </div>
+
+  <h3>Scan QR Code</h3>
+  <button (click)="startScan()">Start QR Scan</button>
+  <video id="qr-video" width="300" height="300" style="border: 1px solid black;"></video>
+  <p *ngIf="scannedCode">Scanned Code: {{ scannedCode }}</p>
+
+  <div *ngIf="studentData">
+    <h4>Student Details:</h4>
+    <p>ID: {{ studentData.id }}</p>
+    <p>Name: {{ studentData.name }}</p>
+    <p>Section: {{ studentData.sec }}</p>
+    <p>Attendents: {{ studentData.Attendnt}}</p>
+  </div>
+</div>
+

@@ -1,0 +1,42 @@
+html, body {
+  height: 100%; /* تأكد من أن الصفحة تمتد لملء الشاشة */
+  margin: 0; /* إزالة الهوامش الافتراضية */
+}
+
+.footer {
+  background-color: #004d7a; /* لون الخلفية */
+  color: #ffffff; /* لون النص */
+  padding: 20px 0;
+  text-align: center;
+  position: fixed; /* جعل الـ Footer ثابتًا */
+  bottom: 0; /* تثبيته في أسفل الصفحة */
+  left: 0; /* بدءًا من الجهة اليسرى */
+  width: 100%; /* ملء العرض بالكامل */
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
+
+  .footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    span {
+      margin-bottom: 10px; /* مسافة بين النص وروابط التواصل الاجتماعي */
+      font-size: 14px; /* حجم النص */
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 15px; /* مسافة بين الأيقونات */
+
+      .icon {
+        color: #ffffff; /* لون الأيقونات */
+        text-decoration: none; /* إزالة الخط من الروابط */
+        transition: color 0.3s;
+
+        &:hover {
+          color: #00bcd4; /* تغيير لون الأيقونة عند التمرير */
+        }
+      }
+    }
+  }
+}

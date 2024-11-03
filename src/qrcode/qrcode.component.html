@@ -17,7 +17,7 @@
   <video id="qr-video" width="300" height="300" style="border: 1px solid black;"></video>
   <p *ngIf="scannedCode">Scanned Code: {{ scannedCode }}</p>
 
-  <div *ngIf="studentData">
+  <div id="scanned-code" *ngIf="studentData">
     <h4>Student Details:</h4>
     <p>ID: {{ studentData.id }}</p>
     <p>Name: {{ studentData.name }}</p>

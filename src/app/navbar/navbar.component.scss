@@ -1,0 +1,42 @@
+
+
+
+
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+  background-color: #22353b;
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+
+  &:hover {
+    background-color: #006f9c; /* تغيير اللون عند التمرير */
+  }
+}
+
+.navbar-title {
+  position: relative;
+  overflow: hidden;
+}
+
+.navbar-title::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  background: #ffffff;
+  bottom: -5px; /* وضع الخط تحت النص */
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.navbar-title:hover::after {
+  transform: translateX(-50%) scaleX(1); /* تأثير الخط عند التمرير */
+}

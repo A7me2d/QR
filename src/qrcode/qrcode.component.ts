@@ -21,7 +21,8 @@ export class QRcodeComponent {
   studentData: Student | null = null;
   qrCodeReader: BrowserQRCodeReader;
   scannerControls: IScannerControls | null = null;
-  apiUrl = 'https://66cb41954290b1c4f199e054.mockapi.io/QR'; // Update your API URL
+  apiUrl = 'https://66cb41954290b1c4f199e054.mockapi.io/QR'; // First API URL
+  apiUrl2 = 'https://66cb41954290b1c4f199e054.mockapi.io/QR2'; // Second API URL
 
   constructor(private http: HttpClient) {
     this.qrCodeReader = new BrowserQRCodeReader();
@@ -48,53 +49,85 @@ export class QRcodeComponent {
           this.scannerControls.stop();
           this.getStudentData(this.scannedCode); // Fetch student data
         }
-      } 
+      }
     });
   }
-
-
-
 
   getStudentData(studentId: string) {
+    const studentNumberId = Number(studentId); // Convert id to a number
+
+    // First, fetch from the first API endpoint
     this.http.get<Student[]>(this.apiUrl).subscribe(data => {
-      console.log('API Response:', data);
+      // console.log('API Response from QR:', data);
 
-      const studentNumberId = Number(studentId); // تحويل id إلى عدد
+      // Check for the student in the first data set
+      let student = data.find(s => Number(s.id) === studentNumberId);
 
-      // العثور على الطالب في البيانات
-      const student = data.find(s => Number(s.id) === studentNumberId); // تحويل id الطالب إلى عدد
       if (student) {
-        student.Attendnt += 1; // زيادة عدد الحضور
-        this.studentData = student; // تعيين بيانات الطالب
-        console.log('Updated Student Data:', this.studentData.Attendnt);
-
-        // الآن نقوم بتحديث بيانات الطالب في API
-        this.updateStudentAttendance(student);
+        this.handleStudentFound(student); // Handle the found student
       } else {
-        console.log('Student not found');
-        this.studentData = null;
+        // If not found, fetch from the second API endpoint
+        this.http.get<Student[]>(this.apiUrl2).subscribe(data2 => {
+          // console.log('API Response from QR2:', data2);
+
+          student = data2.find(s => Number(s.id) === studentNumberId);
+          if (student) {
+            this.handleStudentFound(student); // Handle the found student
+          } else {
+            console.log('Student not found in either API');
+            this.studentData = null;
+          }
+        }, error => {
+          console.error('Error fetching student data from QR2:', error);
+        });
       }
     }, error => {
-      console.error('Error fetching student data:', error);
+      console.error('Error fetching student data from QR:', error);
     });
-  }
+}
 
+handleStudentFound(student: Student) {
+    student.Attendnt += 1; // Increase attendance
+    this.studentData = student; // Assign the student data
+    console.log('Updated Student Data:', this.studentData.Attendnt);
 
-  updateStudentAttendance(student: Student) {
-    const updateUrl = `${this.apiUrl}/${student.id}`; // إنشاء URL صحيح للتحديث
-    console.log('Updating student at URL:', updateUrl); // تسجيل URL لتصحيح الأخطاء
-    console.log('Student to update:', student); // تسجيل بيانات الطالب لتصحيح الأخطاء
+    // Update the student's attendance in the corresponding API
+    this.updateStudentAttendance(student);
+}
 
-    // إرسال بيانات الطالب المحدثة إلى API
-    this.http.put(updateUrl, student).subscribe(
-      response => {
-        console.log('Successfully updated student attendance:', response);
-      },
-      error => {
-        console.error('Error updating student attendance:', error);
+updateStudentAttendance(student: Student) {
+  const updateUrl = `${this.apiUrl}/${student.id}`; // URL for the first API
+  const updateUrl2 = `${this.apiUrl2}/${student.id}`; // URL for the second API
+
+  // Check if the student exists in the first API
+  this.http.get<Student[]>(this.apiUrl).subscribe(data => {
+      const existsInFirstApi = data.some(s => s.id === student.id);
+
+      if (existsInFirstApi) {
+          // Update the first API if the student exists there
+          this.http.put(updateUrl, student).subscribe(
+              response => {
+                  // console.log('Successfully updated student attendance in the first API:', response);
+              },
+              error => {
+                  console.error('Error updating student attendance in the first API:', error);
+              }
+          );
+      } else {
+          // If not found in the first API, update the second API
+          this.http.put(updateUrl2, student).subscribe(
+              response => {
+                  // console.log('Successfully updated student attendance in the second API:', response);
+              },
+              error => {
+                  console.error('Error updating student attendance in the second API:', error);
+              }
+          );
       }
-    );
-  }
+  }, error => {
+      console.error('Error fetching student data from the first API for update:', error);
+  });
+}
 
 
 }

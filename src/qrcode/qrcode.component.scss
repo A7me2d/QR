@@ -1,13 +1,14 @@
 // General Styles
 div {
-  max-width: 800px; // Set a maximum width for the component
-  margin: 40px auto; // Center the container with space above and below
+  max-width: 900px; // Set a maximum width for the component
+  margin: 20px auto; // Center the container with space above and below
   padding: 30px; // Add padding for inner spacing
   border-radius: 16px; // Rounded corners for a modern look
   background: #2c3e50; // Dark background color for a sophisticated feel
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7); // Softer shadow for depth
   color: #ecf0f1; // Light text color for readability
   animation: fadeIn 0.5s ease-in; // Fade-in animation
+  // height: 84vh;
 
   // Keyframes for fade-in effect
   @keyframes fadeIn {
@@ -30,6 +31,11 @@ h3 {
   font-size: 28px; // Increased font size for headings
   text-align: center; // Center align headings
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6); // Softer shadow for depth
+}
+
+#scanned-code{
+  padding-bottom: 30px;
+  margin-bottom: 50px;
 }
 
 // Input and Button Styles

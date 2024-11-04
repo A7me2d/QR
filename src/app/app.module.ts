@@ -7,6 +7,8 @@ import { QRcodeComponent } from 'src/qrcode/qrcode.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
+import { StudentComponent } from './student/student.component';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -16,12 +18,15 @@ import { FooterComponent } from './footer/footer.component';
     AppComponent,
     QRcodeComponent,
     NavbarComponent,
-    FooterComponent
+    FooterComponent,
+    StudentComponent,
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

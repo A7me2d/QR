@@ -1,0 +1,57 @@
+
+
+
+
+
+
+
+
+
+
+<div id="student-table" *ngIf="students.length > 0; else loading">
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Section</th>
+        <th>Attendance</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let student of students">
+        <td>{{ student.id }}</td>
+        <td>
+          <div *ngIf="editMode[student.id]; else displayName">
+            <input [(ngModel)]="student.name" class="edit-input" />
+          </div>
+          <ng-template #displayName>{{ student.name }}</ng-template>
+        </td>
+        <td>
+          <div *ngIf="editMode[student.id]; else displaySection">
+            <input [(ngModel)]="student.sec" class="edit-input" />
+          </div>
+          <ng-template #displaySection>{{ student.sec }}</ng-template>
+        </td>
+        <td>
+          <div *ngIf="editMode[student.id]; else displayAttendance">
+            <input type="number" [(ngModel)]="student.Attendnt" (ngModelChange)="student.Attendnt = $event ? +$event : 0" class="edit-input" />
+          </div>
+          <ng-template #displayAttendance>{{ student.Attendnt }}</ng-template>
+        </td>
+        <td>
+          <div *ngIf="editMode[student.id]; else editButton">
+            <button class="save-button" (click)="saveStudent(student)">Save</button>
+          </div>
+          <ng-template #editButton>
+            <button class="edit-button" (click)="editStudent(student.id)">Edit</button>
+          </ng-template>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<ng-template #loading>
+  <p class="loading">Loading student data...</p>
+</ng-template>

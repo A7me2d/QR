@@ -2,91 +2,153 @@
 
 
 
-
-
 #student-table {
-  margin: 50px 0;
+  margin: 20px 0; /* تقليل المسافات على الشاشات الصغيرة */
   font-weight: 600;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  margin-bottom: 200px;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
-  background: #ffffff; /* خلفية بيضاء ناصعة */
-  border-radius: 12px; /* زوايا دائرية */
-  overflow: hidden; /* منع التجاوز */
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); /* ظل قوي للعمق */
+  margin-top: 10px; /* تقليل المسافة العلوية */
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* تقليل الظل */
 }
 
 th, td {
-  padding: 15px 40px; /* مساحة كافية */
+  padding: 10px 20px; /* تقليل المساحات الداخلية على الشاشات الصغيرة */
   text-align: left;
-  border-bottom: 2px solid #007bff; /* حد أزرق جريء */
+  border-bottom: 1px solid #007bff; /* تقليل سماكة الحد */
 }
 
 th {
-  background-color: #007bff; /* خلفية زرقاء جريئة */
-  color: white; /* نص أبيض */
-  font-weight: 700; /* وزن خط ثقيل */
-  text-transform: uppercase; /* تحويل النص إلى أحرف كبيرة */
+  background-color: #007bff;
+  color: white;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 14px; /* تقليل حجم الخط */
 }
 
 tr:hover {
-  background-color: rgba(0, 123, 255, 0.1); /* تمييز عند التمرير */
-  transition: background-color 0.5s, transform 0.2s; /* انتقالات سلسة */
-  // transform: scal/e(1.03); /* زيادة طفيفة في الحجم */
+  background-color: rgba(0, 123, 255, 0.1);
+  transition: background-color 0.5s, transform 0.2s;
 }
 
 .loading {
   text-align: center;
-  font-size: 20px; /* حجم خط أكبر */
-  color: #555; /* لون رمادي */
-  margin-top: 20px;
+  font-size: 18px; /* تقليل حجم الخط */
+  color: #555;
+  margin-top: 15px; /* تقليل المسافة العلوية */
 }
 
 button {
-  padding: 10px 20px;
+  padding: 8px 15px; /* تقليل حجم الأزرار */
   border: none;
-  border-radius: 6px; /* زوايا دائرية للأزرار */
-  font-weight: bold; /* نص عريض */
-  color: white; /* نص أبيض */
+  border-radius: 6px;
+  font-weight: bold;
+  color: white;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s; /* انتقالات سلسة */
-  font-size: 16px; /* حجم خط أكبر */
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* ظل للأزرار */
+  transition: background-color 0.3s, transform 0.2s;
+  font-size: 14px; /* تقليل حجم الخط */
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15); /* تقليل الظل */
 }
 
 .save-button {
-  background-color: #28a745; /* زر حفظ أخضر قوي */
+  background-color: #28a745;
 }
 
 .save-button:hover {
-  background-color: #218838; /* أخضر أغمق عند التمرير */
-  transform: translateY(-2px); /* حركة بسيطة عند التمرير */
+  background-color: #218838;
+  transform: translateY(-2px);
 }
 
 .edit-button {
-  background-color: #ffc107; /* زر تعديل أصفر */
+  background-color: #ffc107;
 }
 
 .edit-button:hover {
-  background-color: #e0a800; /* أصفر أغمق عند التمرير */
-  transform: translateY(-2px); /* حركة بسيطة عند التمرير */
+  background-color: #e0a800;
+  transform: translateY(-2px);
 }
 
 .edit-input {
-  border: 2px solid #007bff; /* حد أزرق قوي للحقول */
-  border-radius: 4px; /* زوايا دائرية */
-  padding: 10px; /* مساحة داخلية */
-  width: 100%; /* عرض كامل */
-  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1); /* ظل ناعم داخلي */
-  transition: border-color 0.3s; /* انتقالات سلسة */
+  border: 2px solid #007bff;
+  border-radius: 4px;
+  padding: 8px; /* تقليل المسافات الداخلية */
+  width: 100%;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s;
 }
 
 .edit-input:focus {
-  border-color: #0056b3; /* حد أزرق داكن عند التركيز */
-  outline: none; /* إزالة الخط الافتراضي */
+  border-color: #0056b3;
+  outline: none;
+}
+
+/* استعلامات الوسائط للشاشات الصغيرة */
+@media (max-width: 768px) {
+  th, td {
+    padding: 8px 10px; /* تقليل المسافات أكثر */
+    font-size: 12px; /* تقليل حجم الخط */
+  }
+
+  button {
+    padding: 6px 10px; /* تقليل حجم الأزرار */
+    font-size: 12px; /* تقليل حجم الخط */
+  }
+
+  .edit-input {
+    padding: 6px; /* تقليل المسافات الداخلية للحقل */
+    font-size: 12px; /* تقليل حجم الخط */
+  }
+}
+
+@media (max-width: 480px) {
+  th, td {
+    font-size: 10px; /* تقليل حجم الخط أكثر */
+    padding: 5px 8px; /* تقليل المسافات أكثر */
+  }
+
+  .edit-input {
+    font-size: 10px;
+    padding: 5px;
+  }
+
+  button {
+    font-size: 10px;
+    padding: 5px 8px;
+  }
+
+  #student-table {
+    overflow-x: auto; /* إضافة شريط تمرير أفقي إذا لزم الأمر */
+  }
+}
+
+
+#search-container{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 20px;
+  padding: 20px;
+  // border: 2px solid #007bff;
+  // border-radius: 8px;
+}
+
+#search-container input{
+  border: 2px solid #007bff;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 20px;
+  text-align: center;
+
+}
+
+#search-container input:focus{
+  outline: none;
+  border: 2px solid #007bff;
+
 }

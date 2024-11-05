@@ -3,13 +3,20 @@
 
 
 
-
-
-
-
-
 <div id="student-table" *ngIf="students.length > 0; else loading">
-  <table>
+  <!-- Search Input -->
+  <div id="search-container">
+    <input
+      type="text"
+      placeholder=" Search By ID"
+      [(ngModel)]="searchTerm"
+      (input)="searchStudents()"
+      class="search-input"
+    />
+  </div>
+
+  <!-- Students Table -->
+  <table class="students-table">
     <thead>
       <tr>
         <th>ID</th>
@@ -20,7 +27,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let student of students">
+      <tr *ngFor="let student of filteredStudents">
         <td>{{ student.id }}</td>
         <td>
           <div *ngIf="editMode[student.id]; else displayName">
@@ -36,7 +43,12 @@
         </td>
         <td>
           <div *ngIf="editMode[student.id]; else displayAttendance">
-            <input type="number" [(ngModel)]="student.Attendnt" (ngModelChange)="student.Attendnt = $event ? +$event : 0" class="edit-input" />
+            <input
+              type="number"
+              [(ngModel)]="student.Attendnt"
+              (ngModelChange)="student.Attendnt = $event ? +$event : 0"
+              class="edit-input"
+            />
           </div>
           <ng-template #displayAttendance>{{ student.Attendnt }}</ng-template>
         </td>
@@ -52,6 +64,8 @@
     </tbody>
   </table>
 </div>
+
+<!-- Loading Template -->
 <ng-template #loading>
   <p class="loading">Loading student data...</p>
 </ng-template>

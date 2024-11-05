@@ -18,7 +18,8 @@
   font-size: 20px; /* Slightly smaller font for elegance */
   font-weight: 600; /* Semi-bold font */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  border-radius: 5px; /* Rounded corners for a softer look */
+  // border-radius: 5px; /* Rounded corners for a softer look */
+  border-bottom: 5px;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
 
   &:hover {

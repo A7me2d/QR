@@ -4,6 +4,8 @@ import { StudentComponent } from './student/student.component';
 import { QRcodeComponent } from 'src/qrcode/qrcode.component';
 
 const routes: Routes = [
+  { path: '' , component: QRcodeComponent},
+  { path: '##' , component: QRcodeComponent},
   { path: 'student' , component: StudentComponent},
   { path: 'QR', component : QRcodeComponent},
 ];

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import * as XLSX from 'xlsx';
 
 interface Student {
   id: number;
@@ -83,10 +84,15 @@ export class StudentComponent implements OnInit {
 
 
   async resetAllAttendance() {
-    // تصفير غياب جميع الطلاب محليًا
-    this.students.forEach(student => student.Attendnt = 0);
+    // تصفير غياب الطلاب الذين لديهم غياب فقط
+    const studentsWithAbsence = this.students.filter(student => student.Attendnt > 0);
 
-    for (const student of this.students) {
+    if (studentsWithAbsence.length === 0) {
+      alert('لا توجد أي تغييرات على الغياب');
+      return; // إذا لم يكن هناك طلاب لديهم غياب، نوقف العملية
+    }
+
+    for (const student of studentsWithAbsence) {
       let apiUrlToUse = '';
 
       if (['SEC1', 'SEC2', 'SEC3'].includes(student.sec)) {
@@ -99,7 +105,10 @@ export class StudentComponent implements OnInit {
       }
 
       try {
-        // إرسال الطلب لتحديث الغياب لكل طالب مع تأخير
+        // تصفير الغياب محليًا
+        student.Attendnt = 0;
+
+        // إرسال الطلب لتحديث غياب الطالب
         await this.http.put(`${apiUrlToUse}/${student.id}`, student).toPromise();
         console.log(`Attendance reset for student ID: ${student.id}`);
 
@@ -111,7 +120,7 @@ export class StudentComponent implements OnInit {
       }
     }
 
-    alert('تم تصفير جميع الغياب وتحديث البيانات بنجاح!');
+    alert('تم تصفير غياب الطلاب الذين لديهم غياب وتحديث البيانات بنجاح!');
   }
 
   // دالة لتأخير التنفيذ
@@ -119,11 +128,59 @@ export class StudentComponent implements OnInit {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
+
   sortStudentsByAttendance() {
     this.filteredStudents.sort((a, b) => {
       return this.sortAscending ? a.Attendnt - b.Attendnt : b.Attendnt - a.Attendnt;
     });
     this.sortAscending = !this.sortAscending; // عكس الترتيب عند كل نقر
   }
+
+
+  // downloadStudentData() {
+  //   // تحويل البيانات إلى ورقة Excel
+  //   const worksheet = XLSX.utils.json_to_sheet(this.students);
+
+  //   // ضبط المسافات (عرض الأعمدة)
+  //   const columnWidths = [
+  //     { wch: 10 }, // عرض العمود الأول (ID)
+  //     { wch: 20 }, // عرض العمود الثاني (Name)
+  //     { wch: 10 }, // عرض العمود الثالث (Section)
+  //     { wch: 15 }  // عرض العمود الرابع (Attendance)
+  //   ];
+
+  //   worksheet['!cols'] = columnWidths; // تطبيق عرض الأعمدة
+
+  //   // تنسيق الخلايا
+  //   const headerStyle = {
+  //     font: { bold: true }, // الخط عريض للعناوين
+  //     alignment: { horizontal: 'center', vertical: 'center' }, // محاذاة النص إلى المنتصف
+  //     fill: { fgColor: { rgb: 'FFFF00' } } // لون خلفية أصفر للعناوين
+  //   };
+
+  //   // تطبيق التنسيق على رأس الجدول
+  //   const range = XLSX.utils.decode_range(worksheet['!ref'] as string);
+  //   for (let col = range.s.c; col <= range.e.c; col++) {
+  //     const cellRef = XLSX.utils.encode_cell({ r: 0, c: col });
+  //     if (!worksheet[cellRef]) continue;
+  //     worksheet[cellRef].s = headerStyle;
+  //   }
+
+  //   // إنشاء الكتاب (WorkBook)
+  //   const workbook = XLSX.utils.book_new();
+  //   XLSX.utils.book_append_sheet(workbook, worksheet, 'Students');
+
+  //   // تحويل الكتاب إلى ملف XLSX
+  //   const excelFile = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+
+  //   // إنشاء Blob وتحميل الملف
+  //   const blob = new Blob([excelFile], { type: 'application/octet-stream' });
+  //   const link = document.createElement('a');
+  //   link.href = URL.createObjectURL(blob);
+  //   link.download = 'students_data.xlsx'; // اسم الملف
+  //   link.click();
+  // }
+
+
 
 }

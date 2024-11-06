@@ -1,23 +1,18 @@
-
-
-
-
-
 <div id="student-table" *ngIf="students.length > 0; else loading">
   <!-- Search Input -->
   <div id="search-container">
-    <input
-      type="text"
-      placeholder=" Search By ID"
-      [(ngModel)]="searchTerm"
-      (input)="searchStudents()"
-      class="search-input"
-    />
+    <input type="text" placeholder=" Search By ID" [(ngModel)]="searchTerm" (input)="searchStudents()"
+      class="search-input" />
 
 
 
   </div>
-
+  <div id="sort-container">
+    <button class="sort-button" (click)="sortStudentsByAttendance()">
+      Sort by Attendance
+    </button>
+    <button class="reset-attendance-button" (click)="resetAllAttendance()"> Del All Atendent </button>
+  </div>
   <!-- Students Table -->
   <table class="students-table">
     <thead>
@@ -46,12 +41,8 @@
         </td>
         <td>
           <div *ngIf="editMode[student.id]; else displayAttendance">
-            <input
-              type="number"
-              [(ngModel)]="student.Attendnt"
-              (ngModelChange)="student.Attendnt = $event ? +$event : 0"
-              class="edit-input"
-            />
+            <input type="number" [(ngModel)]="student.Attendnt"
+              (ngModelChange)="student.Attendnt = $event ? +$event : 0" class="edit-input" />
           </div>
           <ng-template #displayAttendance>{{ student.Attendnt }}</ng-template>
         </td>

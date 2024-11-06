@@ -19,6 +19,8 @@ table {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* تقليل الظل */
 }
 
+
+
 th, td {
   padding: 10px 20px; /* تقليل المساحات الداخلية على الشاشات الصغيرة */
   text-align: left;
@@ -152,4 +154,52 @@ button {
   outline: none;
   border: 2px solid #007bff;
 
+}
+
+
+#sort-container button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  color: #28a745;
+  font-size: 20px;
+  text-align: center;
+  padding: 20px;
+  border: 2px solid #28a745;
+  border-radius: 8px;
+}
+
+#sort-container button:hover{
+  background-color: #28a745;
+  color: white;
+}
+
+#sort-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  color: #28a745;
+}
+
+
+.reset-attendance-button{
+  // display: flex;
+  // align-items: center;
+  margin: 0px 10px;
+  // justify-content: center;
+  // align-items: center;
+  // margin-bottom: 20px;
+  color: #dc3545 !important;
+  // font-size: 20px;
+  // text-align: center;
+  // padding: 20px;
+  border: 2px solid #dc3545 !important;
+  // border-radius: 8px;
+}
+
+.reset-attendance-button:hover{
+  background-color: #dc3545 !important;
+  color: white !important;
 }

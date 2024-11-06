@@ -1,0 +1,118 @@
+
+
+
+
+
+
+
+// Reset Styles
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%); // تدرج أزرق وأخضر مريح
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  margin: 0;
+}
+.signin-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.signin-card {
+  background: rgba(255, 255, 255, 0.15); // خلفية شفافة ناعمة
+  border-radius: 15px;
+  padding: 40px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); // تقليل الظل لجعل التصميم أنظف
+  backdrop-filter: blur(10px);
+  transition: transform 0.3s ease;
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+}
+
+.signin-card:hover {
+  transform: translateY(-10px);
+}
+
+.signin-title {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.signin-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-container {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+input::placeholder {
+  color: #888;
+}
+
+
+.signin-button {
+  background: #00c6ff; // لون زر أنيق ومميز
+  background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+  border: none;
+  padding: 12px;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.signin-button:hover {
+  background: linear-gradient(135deg, #0072ff 0%, #00c6ff 100%);
+}
+
+.signup-prompt {
+  margin-top: 15px;
+  font-size: 0.9rem;
+}
+
+.signup-prompt a {
+  color: #00bfa5; // لون رابط حديث وأنيق
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.signup-prompt a:hover {
+  color: #80deea;
+}
+
+
+.error {
+  color: red;
+  margin-top: 10px;
+  font-size: 0.9rem;
+}

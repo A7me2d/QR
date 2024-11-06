@@ -1,0 +1,33 @@
+<body>
+  <div class="signin-container">
+    <div class="signin-card">
+      <h2 class="signin-title">Welcome Back</h2>
+      <form class="signin-form" (submit)="signIn()">
+        <div class="input-container">
+          <input
+            type="email"
+            required
+            placeholder="Email"
+            [(ngModel)]="email"
+            name="email"
+          />
+          <span class="input-highlight"></span>
+        </div>
+        <div class="input-container">
+          <input
+            type="password"
+            required
+            placeholder="Password"
+            [(ngModel)]="password"
+            name="password"
+          />
+          <span class="error ">
+            <p  [class]="addClass" *ngIf="showError" >Invalid Password or Email</p>
+          </span>
+        </div>
+        <button type="submit" class="signin-button">Sign In</button>
+
+      </form>
+    </div>
+  </div>
+</body>

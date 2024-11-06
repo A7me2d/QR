@@ -20,6 +20,8 @@ export class StudentComponent implements OnInit {
   filteredStudents: Student[] = [];
   searchTerm: string = '';
   editMode: { [key: number]: boolean } = {};
+  sortAscending: boolean = true; // لتمكين الترتيب التصاعدي أو التنازلي
+
 
   constructor(private http: HttpClient) {}
 
@@ -80,41 +82,48 @@ export class StudentComponent implements OnInit {
   }
 
 
-  // async resetAllAttendance() {
-  //   // تصفير غياب جميع الطلاب محليًا
-  //   this.students.forEach(student => student.Attendnt = 0);
+  async resetAllAttendance() {
+    // تصفير غياب جميع الطلاب محليًا
+    this.students.forEach(student => student.Attendnt = 0);
 
-  //   for (const student of this.students) {
-  //     let apiUrlToUse = '';
+    for (const student of this.students) {
+      let apiUrlToUse = '';
 
-  //     if (['SEC1', 'SEC2', 'SEC3'].includes(student.sec)) {
-  //       apiUrlToUse = this.apiUrl;
-  //     } else if (['SEC4', 'SEC5', 'SEC6'].includes(student.sec)) {
-  //       apiUrlToUse = this.apiUrl2;
-  //     } else {
-  //       console.error('Invalid section:', student.sec);
-  //       continue;
-  //     }
+      if (['SEC1', 'SEC2', 'SEC3'].includes(student.sec)) {
+        apiUrlToUse = this.apiUrl;
+      } else if (['SEC4', 'SEC5', 'SEC6'].includes(student.sec)) {
+        apiUrlToUse = this.apiUrl2;
+      } else {
+        console.error('Invalid section:', student.sec);
+        continue;
+      }
 
-  //     try {
-  //       // إرسال الطلب لتحديث الغياب لكل طالب مع تأخير
-  //       await this.http.put(`${apiUrlToUse}/${student.id}`, student).toPromise();
-  //       console.log(`Attendance reset for student ID: ${student.id}`);
+      try {
+        // إرسال الطلب لتحديث الغياب لكل طالب مع تأخير
+        await this.http.put(`${apiUrlToUse}/${student.id}`, student).toPromise();
+        console.log(`Attendance reset for student ID: ${student.id}`);
 
-  //       // إضافة تأخير زمني قدره 200 مللي ثانية بين كل طلب
-  //       await this.delay(200);
-  //     } catch (error) {
-  //       console.error(`Error updating attendance for student ID: ${student.id}`, error);
-  //       alert(`Error updating attendance for student ID: ${student.id}`);
-  //     }
-  //   }
+        // إضافة تأخير زمني قدره 200 مللي ثانية بين كل طلب
+        await this.delay(200);
+      } catch (error) {
+        console.error(`Error updating attendance for student ID: ${student.id}`, error);
+        alert(`Error updating attendance for student ID: ${student.id}`);
+      }
+    }
 
-  //   alert('تم تصفير جميع الغياب وتحديث البيانات بنجاح!');
-  // }
+    alert('تم تصفير جميع الغياب وتحديث البيانات بنجاح!');
+  }
 
-  // // دالة لتأخير التنفيذ
-  // delay(ms: number) {
-  //   return new Promise(resolve => setTimeout(resolve, ms));
-  // }
+  // دالة لتأخير التنفيذ
+  delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  sortStudentsByAttendance() {
+    this.filteredStudents.sort((a, b) => {
+      return this.sortAscending ? a.Attendnt - b.Attendnt : b.Attendnt - a.Attendnt;
+    });
+    this.sortAscending = !this.sortAscending; // عكس الترتيب عند كل نقر
+  }
 
 }

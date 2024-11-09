@@ -12,13 +12,13 @@ export class SigninComponent {
   showError: boolean = false; // Used to control visibility of error message
 
   // Simulate a set of valid credentials for demonstration purposes
-  private validEmail = 'a@gmail.com';
-  private validPassword = '1';
+  private ضضضضضض = 'a';
+  private سسس = '1';
 
   constructor() {}
 
   signIn() {
-    if (this.email === this.validEmail && this.password === this.validPassword) {
+    if (this.email === this.ضضضضضض && this.password === this.سسس) {
       // Store the email and token in localStorage
       localStorage.setItem('email', this.email);
       localStorage.setItem('Mr Ahmed', 'sampleToken123');

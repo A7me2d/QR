@@ -15,14 +15,12 @@ interface Student {
   styleUrls: ['./student.component.scss']
 })
 export class StudentComponent implements OnInit {
-  apiUrl = 'https://66cb41954290b1c4f199e054.mockapi.io/QR';
-  apiUrl2 = 'https://66cb41954290b1c4f199e054.mockapi.io/QR2';
+  apiUrl = 'https://66cb41954290b1c4f199e054.mockapi.io/QR'; // استخدام endpoint واحد فقط
   students: Student[] = [];
   filteredStudents: Student[] = [];
   searchTerm: string = '';
   editMode: { [key: number]: boolean } = {};
   sortAscending: boolean = true; // لتمكين الترتيب التصاعدي أو التنازلي
-
 
   constructor(private http: HttpClient) {}
 
@@ -31,38 +29,37 @@ export class StudentComponent implements OnInit {
   }
 
   fetchData() {
-    this.http.get<Student[]>(this.apiUrl).subscribe(data1 => {
-      this.http.get<Student[]>(this.apiUrl2).subscribe(data2 => {
-        this.students = [...data1, ...data2];
+    this.http.get<any[]>(this.apiUrl).subscribe(data => {
+      if (data.length > 0) {
+        this.students = data[0].student; // تعيين الطلاب من خاصية 'student' في العنصر الأول
         this.filteredStudents = this.students;
-      }, error => {
-        console.error('Error fetching data from API 2:', error);
-      });
+        // console.log('API Response:', this.students);
+      } else {
+        console.error('No data available');
+      }
     }, error => {
-      console.error('Error fetching data from API 1:', error);
+      console.error('Error fetching data from API:', error);
     });
   }
-
   editStudent(studentId: number) {
     this.editMode[studentId] = true;
   }
 
-  saveStudent(student: Student) {
-    let apiUrlToUse = '';
+  saveAllStudents() {
+    // إرسال الطلب PUT إلى endpoint مع إضافة المعرف (1) في الرابط
+    const updatedData = { student: this.students };
 
-    if (['SEC1', 'SEC2', 'SEC3'].includes(student.sec)) {
-      apiUrlToUse = this.apiUrl;
-    } else if (['SEC4', 'SEC5', 'SEC6'].includes(student.sec)) {
-      apiUrlToUse = this.apiUrl2;
-    } else {
-      console.error('Invalid section:', student.sec);
-      alert('Invalid section provided for the student.');
-      return;
-    }
-
-    this.http.put<Student>(`${apiUrlToUse}/${student.id}`, student).subscribe(
+    this.http.put(`${this.apiUrl}/1`, updatedData).subscribe(
       () => {
-        this.editMode[student.id] = false;
+        console.log('All students updated successfully!');
+
+        // إيقاف وضع التعديل لجميع الطلاب بعد حفظ البيانات
+        this.students.forEach(student => {
+          this.editMode[student.id] = false;
+        });
+
+        // تحديث الـ filteredStudents في حال كانت هناك حاجة لذلك
+        this.filteredStudents = [...this.students];
       },
       error => {
         console.error('Error saving student data:', error);
@@ -70,6 +67,7 @@ export class StudentComponent implements OnInit {
       }
     );
   }
+
 
   searchStudents() {
     if (this.searchTerm.trim() === '') {
@@ -82,7 +80,6 @@ export class StudentComponent implements OnInit {
     }
   }
 
-
   async resetAllAttendance() {
     // تصفير غياب الطلاب الذين لديهم غياب فقط
     const studentsWithAbsence = this.students.filter(student => student.Attendnt > 0);
@@ -93,32 +90,17 @@ export class StudentComponent implements OnInit {
     }
 
     for (const student of studentsWithAbsence) {
-      let apiUrlToUse = '';
-
-      if (['SEC1', 'SEC2', 'SEC3'].includes(student.sec)) {
-        apiUrlToUse = this.apiUrl;
-      } else if (['SEC4', 'SEC5', 'SEC6'].includes(student.sec)) {
-        apiUrlToUse = this.apiUrl2;
-      } else {
-        console.error('Invalid section:', student.sec);
-        continue;
-      }
-
       try {
         // تصفير الغياب محليًا
         student.Attendnt = 0;
-
-        // إرسال الطلب لتحديث غياب الطالب
-        await this.http.put(`${apiUrlToUse}/${student.id}`, student).toPromise();
-        console.log(`Attendance reset for student ID: ${student.id}`);
-
-        // إضافة تأخير زمني قدره 200 مللي ثانية بين كل طلب
-        await this.delay(200);
       } catch (error) {
         console.error(`Error updating attendance for student ID: ${student.id}`, error);
         alert(`Error updating attendance for student ID: ${student.id}`);
       }
     }
+
+    // الآن نقوم بتحديث جميع الطلاب دفعة واحدة
+    this.saveAllStudents();
 
     alert('تم تصفير غياب الطلاب الذين لديهم غياب وتحديث البيانات بنجاح!');
   }
@@ -128,59 +110,10 @@ export class StudentComponent implements OnInit {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-
   sortStudentsByAttendance() {
     this.filteredStudents.sort((a, b) => {
       return this.sortAscending ? a.Attendnt - b.Attendnt : b.Attendnt - a.Attendnt;
     });
     this.sortAscending = !this.sortAscending; // عكس الترتيب عند كل نقر
   }
-
-
-  // downloadStudentData() {
-  //   // تحويل البيانات إلى ورقة Excel
-  //   const worksheet = XLSX.utils.json_to_sheet(this.students);
-
-  //   // ضبط المسافات (عرض الأعمدة)
-  //   const columnWidths = [
-  //     { wch: 10 }, // عرض العمود الأول (ID)
-  //     { wch: 20 }, // عرض العمود الثاني (Name)
-  //     { wch: 10 }, // عرض العمود الثالث (Section)
-  //     { wch: 15 }  // عرض العمود الرابع (Attendance)
-  //   ];
-
-  //   worksheet['!cols'] = columnWidths; // تطبيق عرض الأعمدة
-
-  //   // تنسيق الخلايا
-  //   const headerStyle = {
-  //     font: { bold: true }, // الخط عريض للعناوين
-  //     alignment: { horizontal: 'center', vertical: 'center' }, // محاذاة النص إلى المنتصف
-  //     fill: { fgColor: { rgb: 'FFFF00' } } // لون خلفية أصفر للعناوين
-  //   };
-
-  //   // تطبيق التنسيق على رأس الجدول
-  //   const range = XLSX.utils.decode_range(worksheet['!ref'] as string);
-  //   for (let col = range.s.c; col <= range.e.c; col++) {
-  //     const cellRef = XLSX.utils.encode_cell({ r: 0, c: col });
-  //     if (!worksheet[cellRef]) continue;
-  //     worksheet[cellRef].s = headerStyle;
-  //   }
-
-  //   // إنشاء الكتاب (WorkBook)
-  //   const workbook = XLSX.utils.book_new();
-  //   XLSX.utils.book_append_sheet(workbook, worksheet, 'Students');
-
-  //   // تحويل الكتاب إلى ملف XLSX
-  //   const excelFile = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-
-  //   // إنشاء Blob وتحميل الملف
-  //   const blob = new Blob([excelFile], { type: 'application/octet-stream' });
-  //   const link = document.createElement('a');
-  //   link.href = URL.createObjectURL(blob);
-  //   link.download = 'students_data.xlsx'; // اسم الملف
-  //   link.click();
-  // }
-
-
-
 }

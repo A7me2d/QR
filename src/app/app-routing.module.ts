@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { StudentComponent } from './student/student.component';
-import { QRcodeComponent } from 'src/qrcode/qrcode.component';
+import { QRcodeComponent } from 'src/app/qrcode/qrcode.component';
 import { SigninComponent } from './signin/signin.component';
 import { authGuard } from './auth.guard';
 

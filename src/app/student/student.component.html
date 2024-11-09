@@ -50,7 +50,7 @@
         </td>
         <td>
           <div *ngIf="editMode[student.id]; else editButton">
-            <button class="save-button" (click)="saveStudent(student)">Save</button>
+            <button class="save-button" (click)="saveAllStudents()">Save</button>
           </div>
           <ng-template #editButton>
             <button class="edit-button" (click)="editStudent(student.id)">Edit</button>

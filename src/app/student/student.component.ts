@@ -33,7 +33,7 @@ export class StudentComponent implements OnInit {
       if (data.length > 0) {
         this.students = data[0].student; // تعيين الطلاب من خاصية 'student' في العنصر الأول
         this.filteredStudents = this.students;
-        // console.log('API Response:', this.students);
+        console.log('API Response:', this.students);
       } else {
         console.error('No data available');
       }
@@ -44,7 +44,6 @@ export class StudentComponent implements OnInit {
   editStudent(studentId: number) {
     this.editMode[studentId] = true;
   }
-
   saveAllStudents() {
     // إرسال الطلب PUT إلى endpoint مع إضافة المعرف (1) في الرابط
     const updatedData = { student: this.students };
@@ -110,10 +109,13 @@ export class StudentComponent implements OnInit {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  sortStudentsByAttendance() {
-    this.filteredStudents.sort((a, b) => {
-      return this.sortAscending ? a.Attendnt - b.Attendnt : b.Attendnt - a.Attendnt;
-    });
-    this.sortAscending = !this.sortAscending; // عكس الترتيب عند كل نقر
-  }
+// نسخة للعرض فقط
+sortStudentsByAttendance() {
+  this.filteredStudents = [...this.students]; // إنشاء نسخة من البيانات الأصلية
+  this.filteredStudents.sort((a, b) => {
+    return this.sortAscending ? a.Attendnt - b.Attendnt : b.Attendnt - a.Attendnt;
+  });
+  this.sortAscending = !this.sortAscending; // عكس الترتيب عند كل نقر
+}
+
 }

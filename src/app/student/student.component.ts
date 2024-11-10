@@ -35,7 +35,7 @@ export class StudentComponent implements OnInit {
       if (data.length > 0) {
         this.students = data[0].student;
         this.filteredStudents = this.students;
-        this.filterBySection(); // تطبيق التصفية حسب القسم
+        this.filterBySection();
         console.log('API Response:', this.students);
       } else {
         console.error('No data available');
@@ -46,10 +46,10 @@ export class StudentComponent implements OnInit {
   }
   filterBySection() {
     if (this.selectedSection) {
-      // عرض الطلاب في القسم المحدد فقط
+
       this.filteredStudents = this.students.filter(student => student.sec === this.selectedSection);
     } else {
-      // عرض جميع الطلاب إذا لم يتم تحديد أي قسم
+
       this.filteredStudents = this.students;
     }
   }
@@ -59,19 +59,19 @@ export class StudentComponent implements OnInit {
     this.editMode[studentId] = true;
   }
   saveAllStudents() {
-    // إرسال الطلب PUT إلى endpoint مع إضافة المعرف (1) في الرابط
+
     const updatedData = { student: this.students };
 
     this.http.put(`${this.apiUrl}/1`, updatedData).subscribe(
       () => {
         console.log('All students updated successfully!');
 
-        // إيقاف وضع التعديل لجميع الطلاب بعد حفظ البيانات
+
         this.students.forEach(student => {
           this.editMode[student.id] = false;
         });
 
-        // تحديث الـ filteredStudents في حال كانت هناك حاجة لذلك
+       
         this.filteredStudents = [...this.students];
       },
       error => {

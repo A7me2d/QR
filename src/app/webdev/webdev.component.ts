@@ -10,11 +10,11 @@ interface Student {
 }
 
 @Component({
-  selector: 'app-student',
-  templateUrl: './student.component.html',
-  styleUrls: ['./student.component.scss']
+  selector: 'app-webdev',
+  templateUrl: './webdev.component.html',
+  styleUrls: ['./webdev.component.scss']
 })
-export class StudentComponent implements OnInit {
+export class WebdevComponent implements OnInit {
   apiUrl = 'https://66cb41954290b1c4f199e054.mockapi.io/QR'; // استخدام endpoint واحد فقط
   students: Student[] = [];
   filteredStudents: Student[] = [];
@@ -33,7 +33,7 @@ export class StudentComponent implements OnInit {
   fetchData() {
     this.http.get<any[]>(this.apiUrl).subscribe(data => {
       if (data.length > 0) {
-        this.students = data[0].student;
+        this.students = data[1].student;
         this.filteredStudents = this.students;
         this.filterBySection(); // تطبيق التصفية حسب القسم
         console.log('API Response:', this.students);
@@ -62,7 +62,7 @@ export class StudentComponent implements OnInit {
     // إرسال الطلب PUT إلى endpoint مع إضافة المعرف (1) في الرابط
     const updatedData = { student: this.students };
 
-    this.http.put(`${this.apiUrl}/1`, updatedData).subscribe(
+    this.http.put(`${this.apiUrl}/2`, updatedData).subscribe(
       () => {
         console.log('All students updated successfully!');
 

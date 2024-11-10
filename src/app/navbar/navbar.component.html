@@ -8,8 +8,9 @@
 <div class="navbar">
   <span class="navbar-title">Ahmed</span>
   <div class="navbar-links">
-    <a *ngIf="isLoggedIn" routerLink="/student" class="navbar-link">Students</a>
-    <a *ngIf="isLoggedIn" routerLink="/QR" class="navbar-link">QR</a>
+    <a *ngIf="isLoggedIn" routerLink="/student" class="navbar-link">Data</a>
+    <a *ngIf="isLoggedIn" routerLink="/Web" class="navbar-link">Web</a>
+    <a *ngIf="isLoggedIn" routerLink="/QR" class="navbar-link">QR-Scan</a>
     <a *ngIf="!isLoggedIn" routerLink="/sigin" class="navbar-link">sigin</a>
   </div>
 </div>

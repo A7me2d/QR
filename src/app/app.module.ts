@@ -10,6 +10,7 @@ import { FooterComponent } from './footer/footer.component';
 import { StudentComponent } from './student/student.component';
 import { FormsModule } from '@angular/forms';
 import { SigninComponent } from './signin/signin.component';
+import { WebdevComponent } from './webdev/webdev.component';
 
 
 
@@ -22,6 +23,7 @@ import { SigninComponent } from './signin/signin.component';
     FooterComponent,
     StudentComponent,
     SigninComponent,
+    WebdevComponent,
 
   ],
   imports: [

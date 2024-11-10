@@ -5,6 +5,11 @@
 
 <div id="qrcode">
   <h3>Generate QR Code</h3>
+  <select id="subject-select" [(ngModel)]="selectedSubject">
+    <option value="web">Web</option>
+    <option value="data">Data</option>
+  </select>
+
   <input #inputCode type="text" placeholder="Enter student code">
   <button (click)="generateQRCode(inputCode.value)">Generate QR Code</button>
   <div *ngIf="qrCodeUrl">

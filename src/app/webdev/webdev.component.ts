@@ -36,7 +36,7 @@ export class WebdevComponent implements OnInit {
         this.students = data[1].student;
         this.filteredStudents = this.students;
         this.filterBySection(); // تطبيق التصفية حسب القسم
-        console.log('API Response:', this.students);
+        // console.log('API Response:', this.students);
       } else {
         console.error('No data available');
       }

@@ -160,3 +160,48 @@ option {
   background-color: #f0e5e5;
   color: #333;
 }
+
+.custom-select {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  // max-width: 400px;
+  // appearance: none;
+  padding: 10px 20px;
+  font-size: 1.1em;
+  font-weight: bold;
+  border: 2px solid #007BFF; /* لون الإطار */
+  border-radius: 8px;
+  background-color: #fff; /* لون الخلفية */
+  color: #333; /* لون النص */
+  transition: border-color 0.3s, box-shadow 0.3s;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* لإضافة سهم للأسفل */
+.custom-select::after {
+  content: '▼';
+  font-size: 0.8em;
+  position: absolute;
+  right: 10px;
+  color: #007BFF;
+  pointer-events: none;
+}
+
+/* التأثيرات عند التركيز (focus) وعند التمرير (hover) */
+.custom-select:focus,
+.custom-select:hover {
+  border-color: #0056b3;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* لون مختلف للخيار */
+.custom-select option {
+  color: #555;
+  font-size: 30px;
+}
+

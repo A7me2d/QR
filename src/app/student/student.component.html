@@ -10,12 +10,12 @@
   </div>
   <div id="sort-container">
     <button class="sort-button" (click)="sortStudentsByAttendance()">
-      Sort by Attendance
+      Sort
     </button>
-    <button class="reset-attendance-button" (click)="resetAllAttendance()"> Del All Atendent </button>
+    <button class="reset-attendance-button" (click)="resetAllAttendance()">Delete</button>
     <!-- <button (click)="downloadStudentData()">Download to Excel</button> -->
     <div id="filter-container">
-      <label for="sectionFilter">اختر القسم:</label>
+      <!-- <label for="sectionFilter">اختر القسم:</label> -->
       <select id="sectionFilter" [(ngModel)]="selectedSection" (change)="filterBySection()">
         <option value="">جميع الأقسام</option>
         <option value="SEC1">SEC1</option>

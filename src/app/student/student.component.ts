@@ -36,7 +36,7 @@ export class StudentComponent implements OnInit {
         this.students = data[0].student;
         this.filteredStudents = this.students;
         this.filterBySection();
-        console.log('API Response:', this.students);
+        // console.log('API Response:', this.students);
       } else {
         console.error('No data available');
       }
@@ -71,7 +71,7 @@ export class StudentComponent implements OnInit {
           this.editMode[student.id] = false;
         });
 
-       
+
         this.filteredStudents = [...this.students];
       },
       error => {

@@ -21,7 +21,9 @@ export class QRcodeComponent {
   studentData: Student | null = null;
   qrCodeReader: BrowserQRCodeReader;
   scannerControls: IScannerControls | null = null;
-  apiUrl = 'https://66cb41954290b1c4f199e054.mockapi.io/QR'; // New API URL
+  apiUrl = 'https://66cb41954290b1c4f199e054.mockapi.io/QR/1';
+  cours1 = 'https://66cb41954290b1c4f199e054.mockapi.io/QR/1';
+  cours2 = 'https://66cb41954290b1c4f199e054.mockapi.io/QR/2';
 
   constructor(private http: HttpClient) {
     this.qrCodeReader = new BrowserQRCodeReader();
@@ -53,19 +55,17 @@ export class QRcodeComponent {
   }
 
   getStudentData(studentId: string) {
-    // جلب البيانات من الـ API
-    this.http.get<any[]>(this.apiUrl).subscribe(data => {
-      // console.log('Fetched data from API:', data); // تحقق من البيانات المسترجعة
+    this.http.get<any>(this.apiUrl).subscribe(data => {
+      // console.log(this.apiUrl);
 
-      // الوصول إلى المصفوفة داخل data[0].student
-      const students = data[0]?.student; // تأكد من وجود البيانات في المصفوفة
+      const students = data.student;
 
+      // console.log(data.student);
       if (students) {
-        // البحث عن الطالب في المصفوفة باستخدام id
-        let student = students.find((student: any) => student.id === studentId);  // قارن الـ id كمجموعة نصية
+        const student = students.find((student: any) => student.id === studentId);
 
         if (student) {
-          this.handleStudentFound(student); // إذا تم العثور على الطالب
+          this.handleStudentFound(student);
         } else {
           console.log('Student not found in the API');
           this.studentData = null;
@@ -79,35 +79,29 @@ export class QRcodeComponent {
   }
 
 
-  handleStudentFound(student: any) {
-    // زيادة عدد الحضور فقط للطالب الذي تم مسحه
-    student.Attendnt += 1;
-    this.studentData = student; // تعيين البيانات المسترجعة في متغير studentData
-    // console.log('Updated Student Data:', this.studentData);
 
-    // تحديث بيانات الطالب فقط في الـ API
+  handleStudentFound(student: any) {
+
+    student.Attendnt += 1;
+    this.studentData = student;
+
     this.updateStudentAttendance(student);
   }
 
   updateStudentAttendance(student: any) {
-    // جلب البيانات الحالية لجميع الطلاب من الـ API
-    this.http.get<any[]>(this.apiUrl).subscribe(data => {
-      // console.log('Fetched data from API:', data); // تحقق من البيانات المسترجعة
-
-      const students = data[0]?.student; // الوصول إلى المصفوفة داخل data[0].student
+    this.http.get<any>(this.apiUrl).subscribe(data => {
+      const students = data.student;
 
       if (students) {
-        // العثور على الطالب الذي تم مسحه بناءً على الـ id
         const studentIndex = students.findIndex((s: { id: any; }) => s.id === student.id);
 
         if (studentIndex !== -1) {
-          // إذا تم العثور على الطالب، نقوم بتحديث الحضور فقط
-          students[studentIndex].Attendnt = student.Attendnt; // تحديث الـ Attendnt للطالب فقط
+          students[studentIndex].Attendnt = student.Attendnt;
 
-          // إرسال البيانات المحدثة إلى الـ API
-          this.http.put(`${this.apiUrl}/1`, { student: students }).subscribe(
+          // استخدام apiUrl مباشرةً للتحديث
+          this.http.put(this.apiUrl, { student: students }).subscribe(
             response => {
-              // console.log('Successfully updated student attendance:', response);
+              console.log('Attendance updated successfully');
             },
             error => {
               console.error('Error updating student attendance:', error);
@@ -121,5 +115,13 @@ export class QRcodeComponent {
       console.error('Error fetching student data from API:', error);
     });
   }
+
+
+
+  onCourseChange(event: Event) {
+    const selectedValue = (event.target as HTMLSelectElement).value;
+    this.apiUrl = selectedValue === 'cours1' ? this.cours1 : this.cours2;
+  }
+
 
 }

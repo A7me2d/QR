@@ -11,6 +11,7 @@
     <a *ngIf="isLoggedIn" routerLink="/student" class="navbar-link">Data</a>
     <a *ngIf="isLoggedIn" routerLink="/Web" class="navbar-link">Web</a>
     <a *ngIf="isLoggedIn" routerLink="/QR" class="navbar-link">QR-Scan</a>
+    <a *ngIf="isLoggedIn" routerLink="/sigin" class="navbar-link" (click)="logout()">Sign Out</a>
     <a *ngIf="!isLoggedIn" routerLink="/sigin" class="navbar-link">sigin</a>
   </div>
 </div>

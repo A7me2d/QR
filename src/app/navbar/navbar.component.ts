@@ -14,4 +14,12 @@ export class NavbarComponent implements OnInit {
     // Check if the token exists in local storage
     this.isLoggedIn = localStorage.getItem('Mr Ahmed') !== null;
   }
+
+  logout() {
+    // Clear all data from local storage
+    localStorage.clear();
+    this.isLoggedIn = false;
+    window.location.href = '/sigin';
+  }
+
 }

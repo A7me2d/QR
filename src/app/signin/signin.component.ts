@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import * as CryptoJS from 'crypto-js';
 
 @Component({
   selector: 'app-signin',
@@ -8,29 +10,54 @@ import { Component } from '@angular/core';
 export class SigninComponent {
   email: string = '';
   password: string = '';
-  addClass: string = ''; // Used for setting error class
-  showError: boolean = false; // Used to control visibility of error message
+  addClass: string = '';
+  showError: boolean = false;
 
-  // Simulate a set of valid credentials for demonstration purposes
-  private ضضضضضض = 'a';
-  private سسس = '1';
+  apiSigLink = 'https://66cb41954290b1c4f199e054.mockapi.io/Emails';
+  private secretKey = 'mySecretKey123';
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
+
+  encryptPassword(password: string): string {
+    return CryptoJS.AES.encrypt(password, this.secretKey).toString();
+  }
+
+  decryptPassword(encryptedPassword: string): string {
+    const bytes = CryptoJS.AES.decrypt(encryptedPassword, this.secretKey);
+    return bytes.toString(CryptoJS.enc.Utf8);
+  }
 
   signIn() {
-    if (this.email === this.ضضضضضض && this.password === this.سسس) {
-      // Store the email and token in localStorage
-      localStorage.setItem('email', this.email);
-      localStorage.setItem('Mr Ahmed', 'sampleToken123');
+    this.http.get<any[]>(this.apiSigLink).subscribe(users => {
+      // العثور على المستخدم المطابق للبريد الإلكتروني
+      const user = users.find(u => u.mail === this.email);
 
-      // Redirect to '/QR'
-      window.location.href = '/QR';
+      if (user) {
+        // فك تشفير كلمة المرور المخزنة للمستخدم
+        const decryptedPassword = this.decryptPassword(user.password);
 
-      alert('Sign-in successful!');
-    } else {
-      // Show error message and set error class
-      this.addClass = 'error';
-      this.showError = true;
-    }
+        // التحقق من مطابقة كلمة المرور المدخلة مع كلمة المرور المفككة
+        if (this.password === decryptedPassword) {
+          localStorage.setItem('email', this.email);
+          localStorage.setItem('Mr Ahmed', 'true');
+          alert('تم تسجيل الدخول بنجاح!');
+
+
+          if (user.name === 'Ahmed Hany') {
+            window.location.href = '/page1';
+          } else if (user.name === 'mariam') {
+            window.location.href = 'https://fontawesome.com/search?q=map&o=r';
+          }
+        } else {
+
+          this.addClass = 'error';
+          this.showError = true;
+        }
+      } else {
+
+        this.addClass = 'error';
+        this.showError = true;
+      }
+    });
   }
 }

@@ -13,6 +13,7 @@ const routes: Routes = [
   { path: 'Web',canActivate: [authGuard], component :WebdevComponent},
   { path: 'sigin',component : SigninComponent},
   { path: '##' ,canActivate: [authGuard], component: QRcodeComponent},
+  { path: '**' ,canActivate: [authGuard], component: QRcodeComponent}
 ];
 
 

@@ -11,6 +11,8 @@ import { StudentComponent } from './student/student.component';
 import { FormsModule } from '@angular/forms';
 import { SigninComponent } from './signin/signin.component';
 import { WebdevComponent } from './webdev/webdev.component';
+import { MariamQRComponent } from './mariam-qr/mariam-qr.component';
+import { ProgenglishComponent } from './progenglish/progenglish.component';
 
 
 
@@ -24,6 +26,8 @@ import { WebdevComponent } from './webdev/webdev.component';
     StudentComponent,
     SigninComponent,
     WebdevComponent,
+    MariamQRComponent,
+    ProgenglishComponent,
 
   ],
   imports: [

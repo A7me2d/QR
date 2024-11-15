@@ -11,11 +11,11 @@ interface Student {
 }
 
 @Component({
-  selector: 'app-qrcode',
-  templateUrl: './qrcode.component.html',
-  styleUrls: ['./qrcode.component.scss']
+  selector: 'app-mariam-qr',
+  templateUrl: './mariam-qr.component.html',
+  styleUrls: ['./mariam-qr.component.scss']
 })
-export class QRcodeComponent implements OnInit {
+export class MariamQRComponent implements OnInit {
   Ahmed: boolean = false;
   mariam: boolean = false;
   qrCodeUrl: string | null = null;
@@ -23,9 +23,9 @@ export class QRcodeComponent implements OnInit {
   studentData: Student | null = null;
   qrCodeReader: BrowserQRCodeReader;
   scannerControls: IScannerControls | null = null;
-  apiUrl = 'https://66cb41954290b1c4f199e054.mockapi.io/QR/1';
-  cours1 = 'https://66cb41954290b1c4f199e054.mockapi.io/QR/1';
-  cours2 = 'https://66cb41954290b1c4f199e054.mockapi.io/QR/2';
+  apiUrl = 'https://673728afaafa2ef22232dd7f.mockapi.io/Mapi/1';
+  cours1 = 'https://673728afaafa2ef22232dd7f.mockapi.io/Mapi/1';
+  cours2 = 'https://673728afaafa2ef22232dd7f.mockapi.io/Mapi/1';
 
   constructor(private http: HttpClient) {
     this.qrCodeReader = new BrowserQRCodeReader();
@@ -42,7 +42,6 @@ export class QRcodeComponent implements OnInit {
       this.mariam = false;
     }
   }
-
 
   generateQRCode(studentCode: string) {
     QRCode.toDataURL(studentCode, { errorCorrectionLevel: 'H' })
@@ -63,7 +62,7 @@ export class QRcodeComponent implements OnInit {
         this.scannedCode = result.getText();
         if (this.scannerControls) {
           this.scannerControls.stop();
-          this.getStudentData(this.scannedCode); // Fetch student data
+          this.getStudentData(this.scannedCode);
         }
       }
     });
@@ -71,14 +70,9 @@ export class QRcodeComponent implements OnInit {
 
   getStudentData(studentId: string) {
     this.http.get<any>(this.apiUrl).subscribe(data => {
-      // console.log(this.apiUrl);
-
       const students = data.student;
-
-      // console.log(data.student);
       if (students) {
         const student = students.find((student: any) => student.id === studentId);
-
         if (student) {
           this.handleStudentFound(student);
         } else {
@@ -93,27 +87,19 @@ export class QRcodeComponent implements OnInit {
     });
   }
 
-
-
   handleStudentFound(student: any) {
-
     student.Attendnt += 1;
     this.studentData = student;
-
     this.updateStudentAttendance(student);
   }
 
   updateStudentAttendance(student: any) {
     this.http.get<any>(this.apiUrl).subscribe(data => {
       const students = data.student;
-
       if (students) {
         const studentIndex = students.findIndex((s: { id: any; }) => s.id === student.id);
-
         if (studentIndex !== -1) {
           students[studentIndex].Attendnt = student.Attendnt;
-
-          // استخدام apiUrl مباشرةً للتحديث
           this.http.put(this.apiUrl, { student: students }).subscribe(
             response => {
               console.log('Attendance updated successfully');
@@ -131,12 +117,8 @@ export class QRcodeComponent implements OnInit {
     });
   }
 
-
-
   onCourseChange(event: Event) {
     const selectedValue = (event.target as HTMLSelectElement).value;
     this.apiUrl = selectedValue === 'cours1' ? this.cours1 : this.cours2;
   }
-
-
 }

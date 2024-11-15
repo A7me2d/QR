@@ -39,14 +39,14 @@ export class SigninComponent {
         // التحقق من مطابقة كلمة المرور المدخلة مع كلمة المرور المفككة
         if (this.password === decryptedPassword) {
           localStorage.setItem('email', this.email);
-          localStorage.setItem('Mr Ahmed', 'true');
+          localStorage.setItem('Mr Ahmed', user.name);
           alert('تم تسجيل الدخول بنجاح!');
 
 
           if (user.name === 'Ahmed Hany') {
-            window.location.href = '/page1';
+            window.location.href = '/QR';
           } else if (user.name === 'mariam') {
-            window.location.href = 'https://fontawesome.com/search?q=map&o=r';
+            window.location.href = '/mariam';
           }
         } else {
 

@@ -1,0 +1,82 @@
+<div id="student-table" *ngIf="students.length > 0; else loading">
+  <!-- Search Input -->
+  <h1 class="title">Programming Department</h1>
+  <div id="search-container">
+    <input type="text" placeholder=" Search By ID" [(ngModel)]="searchTerm" (input)="searchStudents()"
+      class="search-input" />
+
+
+
+  </div>
+  <div id="sort-container">
+    <button class="sort-button" (click)="sortStudentsByAttendance()">
+      Sort
+    </button>
+    <button class="reset-attendance-button" (click)="resetAllAttendance()">Delete</button>
+    <!-- <button (click)="downloadStudentData()">Download to Excel</button> -->
+    <div id="filter-container">
+      <!-- <label for="sectionFilter">اختر القسم:</label> -->
+      <select id="sectionFilter" [(ngModel)]="selectedSection" (change)="filterBySection()">
+        <option value="">جميع الأقسام</option>
+        <option value="SEC1">SEC1</option>
+        <option value="SEC2">SEC2</option>
+        <option value="SEC3">SEC3</option>
+        <option value="SEC4">SEC4</option>
+        <!-- <option value="SEC5">SEC5</option>
+        <option value="SEC6">SEC6</option> -->
+      </select>
+    </div>
+
+
+
+  </div>
+  <!-- Students Table -->
+  <table class="students-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Section</th>
+        <th>Attendance</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let student of filteredStudents">
+        <td>{{ student.id }}</td>
+        <td>
+          <div *ngIf="editMode[student.id]; else displayName">
+            <input [(ngModel)]="student.name" class="edit-input" />
+          </div>
+          <ng-template #displayName>{{ student.name }}</ng-template>
+        </td>
+        <td>
+          <div *ngIf="editMode[student.id]; else displaySection">
+            <input [(ngModel)]="student.sec" class="edit-input" />
+          </div>
+          <ng-template #displaySection>{{ student.sec }}</ng-template>
+        </td>
+        <td>
+          <div *ngIf="editMode[student.id]; else displayAttendance">
+            <input type="number" [(ngModel)]="student.Attendnt"
+              (ngModelChange)="student.Attendnt = $event ? +$event : 0" class="edit-input" />
+          </div>
+          <ng-template #displayAttendance>{{ student.Attendnt }}</ng-template>
+        </td>
+        <td>
+          <div *ngIf="editMode[student.id]; else editButton">
+            <button class="save-button" (click)="saveAllStudents()">Save</button>
+          </div>
+          <ng-template #editButton>
+            <button class="edit-button" (click)="editStudent(student.id)">Edit</button>
+          </ng-template>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Loading Template -->
+<ng-template #loading>
+  <p class="loading">Loading student data...</p>
+</ng-template>

@@ -6,19 +6,33 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  isLoggedIn: boolean = false;
+  Ahmed: boolean = false;
+  mariam: boolean = false;
+
+  signin: boolean = true;
 
   constructor() {}
 
   ngOnInit() {
-    // Check if the token exists in local storage
-    this.isLoggedIn = localStorage.getItem('Mr Ahmed') !== null;
+    const userValue = localStorage.getItem('Mr Ahmed');
+    if (userValue === 'Ahmed Hany') {
+      this.Ahmed = true;
+      this.signin = false;
+    } else if (userValue === 'mariam') {
+      this.mariam = true;
+      this.signin = false;
+    } else {
+      this.Ahmed = false;
+      this.mariam = false;
+    }
   }
 
+
   logout() {
-    // Clear all data from local storage
+
     localStorage.clear();
-    this.isLoggedIn = false;
+    this.Ahmed = false;
+    this.mariam = false;
     window.location.href = '/sigin';
   }
 

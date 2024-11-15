@@ -8,10 +8,12 @@
 <div class="navbar">
   <span class="navbar-title">Ahmed</span>
   <div class="navbar-links">
-    <a *ngIf="isLoggedIn" routerLink="/student" class="navbar-link">Data</a>
-    <a *ngIf="isLoggedIn" routerLink="/Web" class="navbar-link">Web</a>
-    <a *ngIf="isLoggedIn" routerLink="/QR" class="navbar-link">QR-Scan</a>
-    <a *ngIf="isLoggedIn" routerLink="/sigin" class="navbar-link" (click)="logout()">Sign Out</a>
-    <a *ngIf="!isLoggedIn" routerLink="/sigin" class="navbar-link">sigin</a>
+    <a *ngIf="Ahmed" routerLink="/student" class="navbar-link">Data</a>
+    <a *ngIf="Ahmed" routerLink="/Web" class="navbar-link">Web</a>
+    <a *ngIf="Ahmed" routerLink="/QR" class="navbar-link">QR-Scan</a>
+    <a *ngIf="mariam" routerLink="/progEng" class="navbar-link">Pro 1</a>
+    <a *ngIf="mariam" routerLink="/mariam" class="navbar-link">QR-scan</a>
+    <a *ngIf="!signin" routerLink="/sigin" class="navbar-link" (click)="logout()">Sign Out</a>
+    <a *ngIf="signin" routerLink="/sigin" class="navbar-link">sigin</a>
   </div>
 </div>

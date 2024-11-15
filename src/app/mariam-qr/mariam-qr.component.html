@@ -1,0 +1,21 @@
+
+<div *ngIf="mariam" id="qrcode">
+  <h3>Generate QR Code</h3>
+  <select class="custom-select" (change)="onCourseChange($event)">
+    <option value="cours1">English 1</option>
+    <!-- <option value="cours2">English 2</option> -->
+  </select>
+
+  <h3>Scan QR Code</h3>
+  <button (click)="startScan()">Start QR Scan</button>
+  <video id="qr-video" width="300" height="300" style="border: 1px solid black;"></video>
+  <p *ngIf="scannedCode">Scanned Code: {{ scannedCode }}</p>
+
+  <div id="scanned-code" *ngIf="studentData">
+    <h4>Student Details:</h4>
+    <p>ID: {{ studentData.id }}</p>
+    <p>Name: {{ studentData.name }}</p>
+    <p>Section: {{ studentData.sec }}</p>
+    <p>Attendents: {{ studentData.Attendnt}}</p>
+  </div>
+</div>

@@ -28,7 +28,6 @@ import { ProgenglishComponent } from './progenglish/progenglish.component';
     WebdevComponent,
     MariamQRComponent,
     ProgenglishComponent,
-
   ],
   imports: [
     BrowserModule,
